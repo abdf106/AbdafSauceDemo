@@ -29,11 +29,19 @@ describe("SauceDemo Testing", () => {
   });
 
   it("Test3: Logout functionality", function () {
+    cy.viewport(1280, 720); 
     cy.login(this.users.validUser.username, this.users.validUser.password);
-    cy.logout();
-    cy.url().should("include", "saucedemo.com");
-    cy.get("[data-test='login-button']").should("be.visible");
+  
+    cy.get("#react-burger-menu-btn").should("be.visible").click();
+  
+    cy.get("#logout_sidebar_link", { timeout: 10000 })
+      .should("be.visible")
+      .click();
+
+    cy.url().should("include", "/");
+    cy.get('[data-test="login-button"]').should("be.visible");
   });
+  
 
   it("Test4: Product page loads correctly", function () {
     cy.login(this.users.validUser.username, this.users.validUser.password);
